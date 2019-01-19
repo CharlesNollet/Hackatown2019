@@ -8,12 +8,80 @@
         tools:context=".MainActivity">
 
     <TextView
+            android:text="Choose the game you'd like to join"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello World!"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/chooseActivityMessage"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            android:textSize="24sp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
+    <Button
+            android:text="Create new game"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/newGameButton"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chooseActivityMessage"
+            android:onClick="goToNewGameActivity"/>
 
+    <Button
+            android:text="Game 1"
+            android:layout_width="0dp"
+            android:layout_height="10mm"
+            android:id="@+id/game1Button"
+            android:background="@color/playerColor"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/newGameButton"/>
+
+    <Button
+            android:text="Game 2"
+            android:layout_width="0dp"
+            android:layout_height="10mm"
+            android:id="@+id/game2Button"
+            android:background="@color/playerColor"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/game1Button"/>
+
+    <Button
+            android:text="Game 3"
+            android:layout_width="0dp"
+            android:layout_height="10mm"
+            android:id="@+id/game3Button"
+            android:background="@color/playerColor"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/game2Button"/>
+
+    <Button
+            android:text="Game 4"
+            android:layout_width="0dp"
+            android:layout_height="10mm"
+            android:id="@+id/game4Button"
+            android:background="@color/playerColor"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/game3Button"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
