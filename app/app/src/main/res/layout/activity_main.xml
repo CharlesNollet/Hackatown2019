@@ -8,10 +8,10 @@
         tools:context=".MainActivity">
 
     <TextView
-            android:text="Choose the game you'd like to join"
+            android:text="@string/choose_game_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/chooseActivityMessage"
+            android:id="@+id/chooseGameMessage"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
             android:textSize="24sp"
             android:layout_marginStart="16dp"
@@ -21,7 +21,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
-            android:text="Create new game"
+            android:text="@string/new_game_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/newGameButton"
@@ -30,7 +30,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chooseActivityMessage"
+            app:layout_constraintTop_toBottomOf="@+id/chooseGameMessage"
             android:onClick="goToNewGameActivity"/>
 
     <Button

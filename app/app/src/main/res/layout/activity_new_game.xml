@@ -5,10 +5,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".newGameActivity">
+        tools:context=".NewGameActivity">
 
     <TextView
-            android:text="Name your game"
+            android:text="@string/choose_game_name_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/chooseGameNameMessage"
@@ -21,10 +21,10 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
+            android:hint="@string/edit_game_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="Game Name"
             android:ems="10"
             android:id="@+id/editGameName"
             android:layout_marginStart="16dp"
@@ -33,7 +33,7 @@
             app:layout_constraintTop_toBottomOf="@+id/chooseGameNameMessage"/>
 
     <Button
-            android:text="Create game"
+            android:text="@string/create_game_button"
             android:layout_width="0dp"
             android:layout_height="10mm"
             android:id="@+id/createGameButton"
