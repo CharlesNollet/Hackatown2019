@@ -1,6 +1,6 @@
 /*!
  * Start Bootstrap - New Age v5.0.1 (https://startbootstrap.com/template-overviews/new-age)
- * Copyright 2013-2018 Start Bootstrap
+ * Copyright 2013-2019 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-new-age/blob/master/LICENSE)
  */
 
@@ -222,7 +222,7 @@ section.download .badges .badge-link:last-child {
 }
 
 section.download .badges .badge-link img {
-  height: 60px;
+  height: 80px;
 }
 
 @media (min-width: 768px) {

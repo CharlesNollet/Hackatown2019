@@ -8,7 +8,7 @@
         tools:context=".usernameActivity">
 
     <TextView
-            android:text="Choose your username"
+            android:text="@string/choose_username_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/chooseUsernameMessage"
@@ -20,18 +20,47 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
+    <EditText
+            android:text="@string/edit_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editUsername"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chooseUsernameMessage"/>
+
+
     <Button
-            android:text="Join"
+            android:text="@string/join_game_button"
             android:layout_width="0dp"
             android:layout_height="10mm"
-            android:id="@+id/JoinGameButton"
+            android:id="@+id/joinGameButton"
             android:background="@color/playerColor"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chooseUsernameMessage"
+            app:layout_constraintTop_toBottomOf="@+id/editUsername"
             android:onClick="goToMapsActivity"/>
+
+    <TextView
+            android:text="@string/players_in_game_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/playersInGameMessage"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            android:textSize="24sp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/joinGameButton"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

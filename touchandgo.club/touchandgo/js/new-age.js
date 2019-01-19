@@ -21,16 +21,30 @@
   });
 
   $('#howPhone').click(function (){
-    let displayedFeatures = $(".feature-item");
+    isTag = !isTag;
 
     if (isTag){
-      console.log("Salut");
+      $(".feature-item h3").eq(0).text("Your Role : Tagger");
+      $(".feature-item p").eq(0).text("Your tagger time is increasing. Tag someone to keep your rank up");
+      $(".feature-item circle").eq(0).css("fill", "#F43A4A");
+
+      $(".feature-item p").eq(1).text("Mercilessly hunt one of them to give him the tag role");
+
+      $(".feature-item h3").eq(2).text("Objective");
+      $(".feature-item p").eq(2).text("test");
+      $(".feature-item circle").eq(2).css("fill", "yellow");
     }
     else{
-      console.log("oof");
-    }
+      $(".feature-item h3").eq(0).text("Your Role : Hunted");
+      $(".feature-item p").eq(0).text("Identify yourself apart of other players which are also being hunted");
+      $(".feature-item circle").eq(0).css("fill", "#53CC77");
 
-    isTag = !isTag;
+      $(".feature-item p").eq(1).text("Keep track of friends which are also part of the game");
+
+      $(".feature-item h3").eq(2).text("Tagger");
+      $(".feature-item p").eq(2).text("Stay away from these people to keep your tagger timer as low as possible");
+      $(".feature-item circle").eq(2).css("fill", "#F43A4A");
+    }
   })
 
   // Activate scrollspy to add active class to navbar items on scroll
