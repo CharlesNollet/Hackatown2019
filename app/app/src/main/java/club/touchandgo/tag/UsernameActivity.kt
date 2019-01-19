@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_username.*
 
-class usernameActivity : AppCompatActivity() {
+class UsernameActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

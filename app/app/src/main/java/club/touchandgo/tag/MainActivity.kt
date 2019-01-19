@@ -3,9 +3,7 @@ package club.touchandgo.tag
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.view.View
-import android.widget.EditText
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     /** called when the user taps the New Game Button */
     fun goToNewGameActivity(view: View) {
-        val intent = Intent(this, newGameActivity::class.java)
+        val intent = Intent(this, NewGameActivity::class.java)
         startActivity(intent)
     }
 }

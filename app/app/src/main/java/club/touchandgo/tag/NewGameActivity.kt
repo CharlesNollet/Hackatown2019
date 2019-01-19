@@ -7,7 +7,7 @@ import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.view.View
 import android.widget.EditText
 
-class newGameActivity : AppCompatActivity() {
+class NewGameActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,7 +18,7 @@ class newGameActivity : AppCompatActivity() {
     fun goToUsernameActivity(view: View) {
         val gameName = findViewById<EditText>(R.id.editGameName)
         val message  = gameName.text.toString()
-        val intent = Intent(this, usernameActivity::class.java).apply {
+        val intent = Intent(this, UsernameActivity::class.java).apply {
             putExtra(EXTRA_MESSAGE, message)
         }
         startActivity(intent)
