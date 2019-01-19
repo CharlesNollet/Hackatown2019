@@ -25,14 +25,16 @@
 
     if (isTag){
       $(".feature-item h3").eq(0).text("Your Role : Tagger");
-      $(".feature-item p").eq(0).text("Your tagger time is increasing. Tag someone to keep your rank up");
+      $(".feature-item p").eq(0).text("Chase hunted players to give them your role.");
       $(".feature-item circle").eq(0).css("fill", "#F43A4A");
 
-      $(".feature-item p").eq(1).text("Mercilessly hunt one of them to give him the tag role");
+      $(".feature-item p").eq(1).text("Mercilessly hunt one of them to give him the tagger role");
 
       $(".feature-item h3").eq(2).text("Objective");
-      $(".feature-item p").eq(2).text("test");
-      $(".feature-item circle").eq(2).css("fill", "yellow");
+      $(".feature-item p").eq(2).text("Time is working against you here. Hurry and find someone!");
+      $(".feature-item img")[0].hidden = false;
+      $(".feature-item svg").eq(2).hide();
+     
     }
     else{
       $(".feature-item h3").eq(0).text("Your Role : Hunted");
@@ -43,7 +45,8 @@
 
       $(".feature-item h3").eq(2).text("Tagger");
       $(".feature-item p").eq(2).text("Stay away from these people to keep your tagger timer as low as possible");
-      $(".feature-item circle").eq(2).css("fill", "#F43A4A");
+      $(".feature-item img")[0].hidden = true;
+      $(".feature-item svg").eq(2).show();
     }
   })
 
