@@ -21,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
-            android:text="@string/edit_game_name"
+            android:hint="@string/edit_game_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
