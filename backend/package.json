@@ -4,6 +4,7 @@
   "description": "Express project seed in Typescript",
   "scripts": {
     "start": "node build/bin/www",
+    "hack": "npm run build && npm start",
     "dev": "gulp start",
     "build": "gulp build"
   },
