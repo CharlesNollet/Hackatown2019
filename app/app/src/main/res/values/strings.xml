@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">TAG</string>
     <string name="title_activity_maps">Map</string>
+    <string name="choose_game_message">Choose the game you\'d like to join</string>
+    <string name="new_game_button">Create new game</string>
+    <string name="choose_username_message">Choose your username</string>
+    <string name="join_game_button">Join</string>
+    <string name="choose_game_name_message">Name your game</string>
+    <string name="edit_game_name">Game Name</string>
+    <string name="create_game_button">Create Game</string>
+    <string name="edit_username">Username</string>
+    <string name="players_in_game_message">Current players in game</string>
 </resources>
