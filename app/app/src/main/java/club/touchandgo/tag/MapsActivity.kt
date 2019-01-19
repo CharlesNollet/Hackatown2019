@@ -73,7 +73,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 if (location != null) {
                     lastLocation = location
                     val currentLatLng = LatLng(location.latitude, location.longitude)
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 16f))
                 } else {
                     fusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null)
                 }
@@ -82,16 +82,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             ex.printStackTrace()
         }
 
-
-//        fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
-//            // Got last known location. In some rare situations this can be null.
-//            // 3
-//            if (location != null) {
-//                lastLocation = location
-//                val currentLatLng = LatLng(location.latitude, location.longitude)
-//                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
-//            }
-//        }
     }
 
     companion object {
