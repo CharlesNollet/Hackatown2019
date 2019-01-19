@@ -1,0 +1,5 @@
+playerColor = #53CC77
+tagColor = #F43A4A
+neutralColor = #93BFF9
+backgroundColor = #EFEFEF
+backgroundDetailColor = #BFBFBF
