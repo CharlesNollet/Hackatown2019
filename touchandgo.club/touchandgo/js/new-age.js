@@ -25,7 +25,7 @@
 
     if (isTag){
       $(".feature-item h3").eq(0).text("Your Role : Tagger");
-      $(".feature-item p").eq(0).text("Your tagger time is increasing. Tag someone as soon as possible to keep your rank.");
+      $(".feature-item p").eq(0).text("Your tagger time is increasing. Tag someone to keep your rank up");
       $(".feature-item circle").eq(0).css("fill", "#F43A4A");
 
       $(".feature-item p").eq(1).text("Mercilessly hunt one of them to give him the tag role");
