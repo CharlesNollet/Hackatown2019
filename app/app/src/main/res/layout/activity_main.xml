@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/chooseActivityMessage"
-            android:textColor="@color/playerColor"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
             android:textSize="24sp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"

@@ -5,13 +5,13 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".newGameActivity">
+        tools:context=".usernameActivity">
 
     <TextView
-            android:text="Name your game"
+            android:text="Choose your username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/chooseGameNameMessage"
+            android:id="@+id/chooseUsernameMessage"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
             android:textSize="24sp"
             android:layout_marginStart="16dp"
@@ -20,30 +20,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:text="Game Name"
-            android:ems="10"
-            android:id="@+id/editGameName"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chooseGameNameMessage"/>
-
     <Button
-            android:text="Create game"
+            android:text="Join"
             android:layout_width="0dp"
             android:layout_height="10mm"
-            android:id="@+id/createGameButton"
+            android:id="@+id/JoinGameButton"
             android:background="@color/playerColor"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="32dp"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editGameName"
-            android:onClick="goToUsernameActivity"/>
+            app:layout_constraintTop_toBottomOf="@+id/chooseUsernameMessage"
+            android:onClick="goToMapsActivity"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
