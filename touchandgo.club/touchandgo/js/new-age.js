@@ -1,6 +1,6 @@
 (function($) {
   "use strict"; // Start of use strict
-
+  var isTag = false;
   // Smooth scrolling using jQuery easing
   $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
     if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
@@ -19,6 +19,19 @@
   $('.js-scroll-trigger').click(function() {
     $('.navbar-collapse').collapse('hide');
   });
+
+  $('#howPhone').click(function (){
+    let displayedFeatures = $(".feature-item");
+
+    if (isTag){
+      console.log("Salut");
+    }
+    else{
+      console.log("oof");
+    }
+
+    isTag = !isTag;
+  })
 
   // Activate scrollspy to add active class to navbar items on scroll
   $('body').scrollspy({
