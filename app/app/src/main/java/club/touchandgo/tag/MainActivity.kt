@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.provider.AlarmClock
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.github.kittinunf.fuel.httpGet
 import com.google.gson.Gson
@@ -47,8 +48,10 @@ class MainActivity : AppCompatActivity(), GameSelectionButtonView.Listener {
                 runOnUiThread{
                     val (games, err) = result
                     if(games != null) {
+                        if((gameList as LinearLayout).childCount > 0){
+                            (gameList as LinearLayout).removeAllViews()
+                        }
                         for (index in games.indices) {
-                            Log.d("HELLLLLLOOOOOOO", "IN LOOP")
                             val itemView = GameSelectionButtonView(applicationContext)
                             itemView.setTitle(games[index].name)
                             itemView.listener = this

@@ -124,6 +124,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             ex.printStackTrace()
         }
 
+        mMap.setOnMarkerClickListener {
+            runOnUiThread{
+                if(myPlayer?.tag == true && it.title != playerName){
+                    updatePlayer(true, it.title)
+                    updatePlayer(false, playerName)
+                    val toast = Toast.makeText(applicationContext,"You just tagged ${it.title}", Toast.LENGTH_LONG)
+                    toast.show()
+                }
+            }
+            return@setOnMarkerClickListener false
+        }
+
     }
 
     private fun updatePosition(){
@@ -165,13 +177,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                             }
                         } else if (player.username == playerName) {
                             if(players.size == 1){
-                                updatePlayer(true)
+                                updatePlayer(true, playerName)
                             }
-                            myPlayer = player
                             var bmp: BitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.green_circle)
                             if(player.tag){
                                 bmp = BitmapDescriptorFactory.fromResource(R.drawable.red_circle)
+                                if(myPlayer?.tag == false){
+                                    val toast = Toast.makeText(applicationContext,"You just got tagged!", Toast.LENGTH_LONG)
+                                    toast.show()
+                                }
                             }
+                            myPlayer = player
                             mMap.addMarker(
                                 MarkerOptions()
                                     .position(LatLng(player.lat.toDouble(),player.long.toDouble()))
@@ -199,13 +215,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
     }
 
-    private fun updatePlayer(tag: Boolean){
+    private fun updatePlayer(tag: Boolean, name:String){
         val json = JSONObject()
-        json.put("username", playerName)
+        json.put("username", name)
         json.put("tag", tag)
 
 
-        var putPlayerURL = "http://207.246.122.125:8080/putPlayer/$playerName"
+        var putPlayerURL = "http://207.246.122.125:8080/putPlayer/$name"
         val request = putPlayerURL.httpPut().body(json.toString())
         request.httpHeaders["Content-Type"] = "application/json"
         request.responseString{ _, _, result ->
