@@ -7,6 +7,9 @@ import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
 import android.widget.LinearLayout
 import com.github.kittinunf.fuel.core.ResponseDeserializable
+import android.view.View
+import android.widget.TextView
+import android.widget.Toast
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.Result
