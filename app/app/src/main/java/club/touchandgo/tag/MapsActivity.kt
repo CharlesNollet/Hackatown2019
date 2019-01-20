@@ -164,6 +164,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                                         .title(player.username))
                             }
                         } else if (player.username == playerName) {
+                            if(players.size == 1){
+                                updatePlayer(true)
+                            }
                             myPlayer = player
                             var bmp: BitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.green_circle)
                             if(player.tag){
@@ -186,7 +189,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         json.put("username", playerName)
         json.put("lat", latitude)
         json.put("long", longitude)
-        json.put("tag", "false")
+
+
+        var putPlayerURL = "http://207.246.122.125:8080/putPlayer/$playerName"
+        val request = putPlayerURL.httpPut().body(json.toString())
+        request.httpHeaders["Content-Type"] = "application/json"
+        request.responseString{ _, _, result ->
+
+        }
+    }
+
+    private fun updatePlayer(tag: Boolean){
+        val json = JSONObject()
+        json.put("username", playerName)
+        json.put("tag", tag)
 
 
         var putPlayerURL = "http://207.246.122.125:8080/putPlayer/$playerName"
