@@ -34,7 +34,8 @@
       $(".feature-item p").eq(2).text("Time is working against you here. Hurry and find someone!");
       $(".feature-item img")[0].hidden = false;
       $(".feature-item svg").eq(2).hide();
-     
+
+      $("#howPhone img").attr("src","../img/game_tag.jpg");      
     }
     else{
       $(".feature-item h3").eq(0).text("Your Role : Hunted");
@@ -47,6 +48,8 @@
       $(".feature-item p").eq(2).text("Stay away from these people to keep your tagger timer as low as possible");
       $(".feature-item img")[0].hidden = true;
       $(".feature-item svg").eq(2).show();
+
+      $("#howPhone img").attr("src","../img/game_hunted.jpg");      
     }
   })
 
