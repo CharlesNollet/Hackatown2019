@@ -5,7 +5,7 @@ import * as mongoose from 'mongoose';
 mongoose.connect('mongodb://hack:Hackatown2019@ds159574.mlab.com:59574/hackdb', {useNewUrlParser: true});
 
 const Game = mongoose.model('Game', { name:String, public:Boolean });
-const Player = mongoose.model('Player', {username: String, lat : Number, long: Number, tag: Boolean})
+const Player = mongoose.model('Player', {game: String, username: String, lat : Number, long: Number, tag: Boolean})
 
 export class Index {
     public router = express.Router();
