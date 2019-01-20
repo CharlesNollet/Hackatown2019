@@ -52,8 +52,7 @@ export class Index {
 
     private async postPlayer(req:express.Request, res:express.Response) {
         const exists = await Player.findOne({ username: req.body.username });
-        console.log(exists);
-        if(exists){
+        if(exists && exists.game == req.body.game){
             res.status(400).end();
             return;
         }
