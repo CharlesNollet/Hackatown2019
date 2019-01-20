@@ -1,7 +1,9 @@
 package club.touchandgo.tag
 
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.AlarmClock
@@ -19,14 +21,13 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.*
 import com.google.gson.Gson
 import org.json.JSONObject
+import kotlin.concurrent.thread
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     override fun onMarkerClick(p0: Marker?) = false
@@ -36,22 +37,30 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
     private var playerName = ""
+    private var myPlayer: Player? = null
+    private val thread = Thread(Runnable {
+        while(true){
+            Thread.sleep(1000)
+            getPlayerNames()
+            updatePosition()
+        }
+    })
 
     private val mLocationRequest = LocationRequest.create()
-        .setInterval(1000)
-        .setFastestInterval(500)
+        .setInterval(2)
+        .setFastestInterval(1)
         .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
 
     private val mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(result: LocationResult?) {
             super.onLocationResult(result)
-            for (location in result!!.locations)
+            for (location in result!!.locations) {
                 if (location != null) {
                     val newLatLng = LatLng(location.latitude, location.longitude)
-                    updatePlayer(location.latitude.toFloat(), location.longitude.toFloat())
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(newLatLng))
                     break
                 }
+            }
         }
     }
 
@@ -73,6 +82,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     override fun onResume() {
         super.onResume()
         getPlayerNames()
+        thread.start()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -99,7 +109,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             return
         }
         mMap.isMyLocationEnabled = true
-
         try {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 if (location != null) {
@@ -116,14 +125,44 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     }
 
+    private fun updatePosition(){
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return
+        }
+        try {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    lastLocation = location
+                    updatePlayer(location.latitude.toFloat(), location.longitude.toFloat())
+                } else {
+                    fusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null)
+                }
+            }
+        } catch (ex: SecurityException) {
+            ex.printStackTrace()
+        }
+    }
+
     private fun getPlayerNames(){
         getPlayersURL.httpGet().responseObject(Player.Deserializer()) { request, response, result ->
             runOnUiThread{
                 val (players, err) = result
                 if (players != null){
+                    mMap.clear()
                     for (player in players){
-                        if(player.username != playerName){
-                            //setIcon
+                        if(myPlayer != null && player.username != playerName){
+                            if((myPlayer as Player).game == player.game){
+                                var bmp: BitmapDescriptor
+                                if(player.tag){
+                                    //
+                                }
+                                mMap.addMarker(
+                                    MarkerOptions()
+                                    .position(LatLng(player.lat.toDouble(),player.long.toDouble()))
+                                    .title(player.username))
+                            }
+                        } else if (player.username == playerName) {
+                            myPlayer = player
                         }
                     }
                 }
