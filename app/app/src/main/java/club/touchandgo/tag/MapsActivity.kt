@@ -5,6 +5,7 @@ import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.AlarmClock
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -45,6 +46,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                     break
                 }
         }
+    }
+
+    override fun onBackPressed() {
+        // super.onBackPressed(); commented this line in order to disable back press
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
