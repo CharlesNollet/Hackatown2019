@@ -2,16 +2,15 @@ package club.touchandgo.tag
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.location.Location
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.AlarmClock
-import android.util.Log
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import com.github.kittinunf.fuel.core.ResponseDeserializable
+import androidx.core.content.ContextCompat
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPut
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -25,9 +24,8 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.maps.model.*
-import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_maps.*
 import org.json.JSONObject
-import kotlin.concurrent.thread
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     override fun onMarkerClick(p0: Marker?) = false
@@ -70,6 +68,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_AppCompat_DayNight_NoActionBar)
         setContentView(R.layout.activity_maps)
         playerName = intent.getStringExtra(AlarmClock.EXTRA_MESSAGE)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -180,7 +179,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                                 updatePlayer(true, playerName)
                             }
                             var bmp: BitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.green_circle)
+                            topBar.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.colorPrimary))
+                            topBar.text = "HUNTED"
                             if(player.tag){
+                                topBar.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.tagColor))
+                                topBar.text = "TAGGER"
                                 bmp = BitmapDescriptorFactory.fromResource(R.drawable.red_circle)
                                 if(myPlayer?.tag == false){
                                     val toast = Toast.makeText(applicationContext,"You just got tagged!", Toast.LENGTH_LONG)
