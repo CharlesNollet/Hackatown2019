@@ -124,6 +124,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             ex.printStackTrace()
         }
 
+        mMap.setOnMarkerClickListener {
+            runOnUiThread{
+                if(myPlayer?.tag == true && it.title != playerName){
+                    updatePlayer(true, it.title)
+                    updatePlayer(false, playerName)
+                }
+            }
+            return@setOnMarkerClickListener false
+        }
+
     }
 
     private fun updatePosition(){
@@ -165,7 +175,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                             }
                         } else if (player.username == playerName) {
                             if(players.size == 1){
-                                updatePlayer(true)
+                                updatePlayer(true, playerName)
                             }
                             myPlayer = player
                             var bmp: BitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.green_circle)
@@ -199,13 +209,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
     }
 
-    private fun updatePlayer(tag: Boolean){
+    private fun updatePlayer(tag: Boolean, name:String){
         val json = JSONObject()
-        json.put("username", playerName)
+        json.put("username", name)
         json.put("tag", tag)
 
 
-        var putPlayerURL = "http://207.246.122.125:8080/putPlayer/$playerName"
+        var putPlayerURL = "http://207.246.122.125:8080/putPlayer/$name"
         val request = putPlayerURL.httpPut().body(json.toString())
         request.httpHeaders["Content-Type"] = "application/json"
         request.responseString{ _, _, result ->
