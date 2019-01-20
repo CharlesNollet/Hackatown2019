@@ -14,6 +14,7 @@ import org.json.JSONObject
 class NewGameActivity : AppCompatActivity() {
 
     var URL = "http://207.246.122.125:8080/postGame"
+    var error: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,17 +36,24 @@ class NewGameActivity : AppCompatActivity() {
 
         val request = URL.httpPost().body(json.toString())
         request.httpHeaders["Content-Type"] = "application/json"
-        request.responseString{ _, _, result ->
+        request.responseString{ _, response, result ->
+            val code = response.httpStatusCode
+            if(code == 400){
+                error = true
+            }
             when (result) {
                 is Result.Failure -> {
                     val ex = result.error.exception
-                    editGameName.error = "Name already taken"
                 }
                 is Result.Success -> {
                     goToUsernameActivity()
                 }
             }
         }
+        if(error){
+            editGameName.error = "Name already taken"
+        }
+
     }
 
     /** called when the user taps the Create Game Button */
