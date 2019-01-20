@@ -7,6 +7,7 @@ import com.github.kittinunf.fuel.*
 import com.github.kittinunf.result.*
 import kotlinx.android.synthetic.main.activity_test.*
 import org.json.JSONObject
+import java.util.stream.Collectors.toList
 
 class test : AppCompatActivity() {
 
@@ -25,7 +26,7 @@ class test : AppCompatActivity() {
         json.put("long", "74")
         json.put("tag", "false")
 
-        postPlayer.httpPost().body(json.toString()).responseString{ _, _, result ->
+        postPlayer.httpPost().body(toList("username" to"")).responseString{ _, _, result ->
             when (result) {
                 is Result.Failure -> {
                     val ex = result.error.exception
