@@ -10,6 +10,9 @@ import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.github.kittinunf.fuel.httpGet
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
+import android.widget.Toast
+
+
 
 data class Game(val name : String, val public : Boolean){
     class Deserializer : ResponseDeserializable<Array<Game>> {
