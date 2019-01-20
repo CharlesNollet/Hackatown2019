@@ -17,6 +17,9 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.maps.model.MapStyleOptions
+
+
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     override fun onMarkerClick(p0: Marker?) = false
@@ -57,6 +60,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.setOnMarkerClickListener(this)
+
+        // Customise the styling of the base map using a JSON object defined
+        // in a raw resource file.
+        val success = googleMap.setMapStyle(
+            MapStyleOptions.loadRawResourceStyle(
+                this, R.raw.style_json
+            )
+        )
+
 
         setUpMap()
     }
