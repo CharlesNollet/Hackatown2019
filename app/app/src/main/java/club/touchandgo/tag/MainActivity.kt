@@ -4,10 +4,17 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_test.*
+
+data class Game(val name : String, val isPublic : Boolean){
+    class Deserializer : ResponseDeserializable<Array<Game>> {
+        override fun deserialize(content: String): Array<Game>? = Gson().fromJson(content, Array<Game>::class.java)
+    }
+}
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,16 +37,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getGameNames(){
-        URL.httpGet().responseString { _, _, result ->
-            when (result) {
-                is Result.Failure -> {
-                    val ex = result.error.exception
-                }
-                is Result.Success -> {
-                    val data = result.get()
-                    game1Button.text = data
-                }
+        URL.httpGet()
+            .responseObject(Game.Deserializer()) { request, response, result ->
+                val (games, err) = result
+                game1Button.text = games!![0].name
+                game2Button.text = games!![1].name
+                game3Button.text = games!![2].name
+                game4Button.text = games!![3].name
             }
-        }
     }
 }
