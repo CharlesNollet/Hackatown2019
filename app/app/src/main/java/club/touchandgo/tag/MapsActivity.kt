@@ -5,8 +5,13 @@ import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.AlarmClock
+import android.util.Log
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import com.github.kittinunf.fuel.core.ResponseDeserializable
+import com.github.kittinunf.fuel.httpGet
+import com.github.kittinunf.fuel.httpPut
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 
@@ -20,12 +25,13 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.maps.model.MapStyleOptions
-
-
+import com.google.gson.Gson
+import org.json.JSONObject
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     override fun onMarkerClick(p0: Marker?) = false
 
+    var getPlayersURL = "http://207.246.122.125:8080/getPlayers"
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
@@ -42,6 +48,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             for (location in result!!.locations)
                 if (location != null) {
                     val newLatLng = LatLng(location.latitude, location.longitude)
+                    updatePlayer(location.latitude.toFloat(), location.longitude.toFloat())
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(newLatLng))
                     break
                 }
@@ -61,6 +68,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getPlayerNames()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -102,6 +114,37 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             ex.printStackTrace()
         }
 
+    }
+
+    private fun getPlayerNames(){
+        getPlayersURL.httpGet().responseObject(Player.Deserializer()) { request, response, result ->
+            runOnUiThread{
+                val (players, err) = result
+                if (players != null){
+                    for (player in players){
+                        if(player.username != playerName){
+                            //setIcon
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updatePlayer(latitude: Float, longitude: Float){
+        val json = JSONObject()
+        json.put("username", playerName)
+        json.put("lat", latitude)
+        json.put("long", longitude)
+        json.put("tag", "false")
+
+
+        var putPlayerURL = "http://207.246.122.125:8080/putPlayer/$playerName"
+        val request = putPlayerURL.httpPut().body(json.toString())
+        request.httpHeaders["Content-Type"] = "application/json"
+        request.responseString{ _, _, result ->
+
+        }
     }
 
     companion object {
