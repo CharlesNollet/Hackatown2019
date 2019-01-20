@@ -87,7 +87,7 @@ class UsernameActivity : AppCompatActivity() {
 
     /** called when the user taps the Join Button */
     private fun goToMapsActivity() {
-        val intent = Intent(this, test::class.java)
+        val intent = Intent(this, MapsActivity::class.java)
         startActivity(intent)
     }
 }
