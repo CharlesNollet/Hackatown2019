@@ -109,6 +109,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             return
         }
         mMap.isMyLocationEnabled = true
+
         try {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 if (location != null) {
@@ -152,17 +153,30 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                     for (player in players){
                         if(myPlayer != null && player.username != playerName){
                             if((myPlayer as Player).game == player.game){
-                                var bmp: BitmapDescriptor
+                                var bmp: BitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.blue_circle)
                                 if(player.tag){
-                                    //
+                                    bmp = BitmapDescriptorFactory.fromResource(R.drawable.red_circle)
                                 }
                                 mMap.addMarker(
                                     MarkerOptions()
-                                    .position(LatLng(player.lat.toDouble(),player.long.toDouble()))
-                                    .title(player.username))
+                                        .position(LatLng(player.lat.toDouble(),player.long.toDouble()))
+                                        .icon(bmp)
+                                        .title(player.username))
                             }
                         } else if (player.username == playerName) {
+                            if(players.size == 1){
+                                updatePlayer(true)
+                            }
                             myPlayer = player
+                            var bmp: BitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.green_circle)
+                            if(player.tag){
+                                bmp = BitmapDescriptorFactory.fromResource(R.drawable.red_circle)
+                            }
+                            mMap.addMarker(
+                                MarkerOptions()
+                                    .position(LatLng(player.lat.toDouble(),player.long.toDouble()))
+                                    .icon(bmp)
+                                    .title(player.username))
                         }
                     }
                 }
@@ -175,7 +189,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         json.put("username", playerName)
         json.put("lat", latitude)
         json.put("long", longitude)
-        json.put("tag", "false")
+
+
+        var putPlayerURL = "http://207.246.122.125:8080/putPlayer/$playerName"
+        val request = putPlayerURL.httpPut().body(json.toString())
+        request.httpHeaders["Content-Type"] = "application/json"
+        request.responseString{ _, _, result ->
+
+        }
+    }
+
+    private fun updatePlayer(tag: Boolean){
+        val json = JSONObject()
+        json.put("username", playerName)
+        json.put("tag", tag)
 
 
         var putPlayerURL = "http://207.246.122.125:8080/putPlayer/$playerName"
