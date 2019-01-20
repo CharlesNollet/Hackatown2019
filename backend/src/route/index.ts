@@ -10,7 +10,7 @@ export class Index {
 
     constructor() {
         this.router.get('/', this.index.bind(this));
-        this.router.post('/test', this.test.bind(this));
+        this.router.post('/postgame', this.postGame.bind(this));
         this.router.get('/games', this.getAllGames.bind(this));
     }
 
@@ -20,7 +20,7 @@ export class Index {
         });
     }
 
-    private async test(req: express.Request, res: express.Response) {
+    private async postGame(req: express.Request, res: express.Response) {
         const game = new Game(req.body);
         await game.save();
         res.end();
