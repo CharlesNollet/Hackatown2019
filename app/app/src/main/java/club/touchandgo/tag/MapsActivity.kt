@@ -129,6 +129,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 if(myPlayer?.tag == true && it.title != playerName){
                     updatePlayer(true, it.title)
                     updatePlayer(false, playerName)
+                    val toast = Toast.makeText(applicationContext,"YOU JUST TAGGED ${it.title}", Toast.LENGTH_LONG)
+                    toast.show()
                 }
             }
             return@setOnMarkerClickListener false
@@ -177,11 +179,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                             if(players.size == 1){
                                 updatePlayer(true, playerName)
                             }
-                            myPlayer = player
                             var bmp: BitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.green_circle)
                             if(player.tag){
                                 bmp = BitmapDescriptorFactory.fromResource(R.drawable.red_circle)
+                                if(myPlayer?.tag == false){
+                                    val toast = Toast.makeText(applicationContext,"YOU JUST GOT TAGGED", Toast.LENGTH_LONG)
+                                    toast.show()
+                                }
                             }
+                            myPlayer = player
                             mMap.addMarker(
                                 MarkerOptions()
                                     .position(LatLng(player.lat.toDouble(),player.long.toDouble()))
