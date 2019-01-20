@@ -22,10 +22,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
+            android:id="@+id/newGameButton"
             android:text="@string/new_game_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/newGameButton"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
@@ -34,55 +34,21 @@
             app:layout_constraintTop_toBottomOf="@+id/chooseGameMessage"
             android:onClick="goToNewGameActivity"/>
 
-    <Button
-            android:id="@+id/game1Button"
-            android:text="Game 1"
+    <ScrollView
+            android:id="@+id/gameListScrollView"
             android:layout_width="0dp"
-            android:layout_height="10mm"
-            android:background="@color/playerColor"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_height="0dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/newGameButton"/>
-
-    <Button
-            android:id="@+id/game2Button"
-            android:text="Game 2"
-            android:layout_width="0dp"
-            android:layout_height="10mm"
-            android:background="@color/playerColor"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/game1Button"/>
-
-    <Button
-            android:id="@+id/game3Button"
-            android:text="Game 3"
-            android:layout_width="0dp"
-            android:layout_height="10mm"
-            android:background="@color/playerColor"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/game2Button"/>
-
-    <Button
-            android:id="@+id/game4Button"
-            android:text="Game 4"
-            android:layout_width="0dp"
-            android:layout_height="10mm"
-            android:background="@color/playerColor"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/game3Button"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/newGameButton">
+        <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/gameList"
+                android:paddingBottom="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
