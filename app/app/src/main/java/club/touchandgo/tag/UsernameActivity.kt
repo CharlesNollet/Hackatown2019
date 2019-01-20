@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
-import android.view.View
-import android.widget.TextView
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.Result
@@ -87,7 +85,10 @@ class UsernameActivity : AppCompatActivity() {
 
     /** called when the user taps the Join Button */
     private fun goToMapsActivity() {
-        val intent = Intent(this, MapsActivity::class.java)
+        val message  = editUsername.text.toString()
+        val intent = Intent(this, MapsActivity::class.java).apply {
+            putExtra(EXTRA_MESSAGE, message)
+        }
         startActivity(intent)
     }
 }
