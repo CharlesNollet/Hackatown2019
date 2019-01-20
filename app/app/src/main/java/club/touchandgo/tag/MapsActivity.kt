@@ -109,6 +109,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             return
         }
         mMap.isMyLocationEnabled = true
+
         try {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 if (location != null) {
@@ -152,17 +153,27 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                     for (player in players){
                         if(myPlayer != null && player.username != playerName){
                             if((myPlayer as Player).game == player.game){
-                                var bmp: BitmapDescriptor
+                                var bmp: BitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.blue_circle)
                                 if(player.tag){
-                                    //
+                                    bmp = BitmapDescriptorFactory.fromResource(R.drawable.red_circle)
                                 }
                                 mMap.addMarker(
                                     MarkerOptions()
-                                    .position(LatLng(player.lat.toDouble(),player.long.toDouble()))
-                                    .title(player.username))
+                                        .position(LatLng(player.lat.toDouble(),player.long.toDouble()))
+                                        .icon(bmp)
+                                        .title(player.username))
                             }
                         } else if (player.username == playerName) {
                             myPlayer = player
+                            var bmp: BitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.green_circle)
+                            if(player.tag){
+                                bmp = BitmapDescriptorFactory.fromResource(R.drawable.red_circle)
+                            }
+                            mMap.addMarker(
+                                MarkerOptions()
+                                    .position(LatLng(player.lat.toDouble(),player.long.toDouble()))
+                                    .icon(bmp)
+                                    .title(player.username))
                         }
                     }
                 }
