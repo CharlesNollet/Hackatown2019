@@ -61,7 +61,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         Log.d("HELLLLLLLLOOOOO", playerName)
         threadInterrupted = true
         val deletePlayerURL = "http://207.246.122.125:8080/deletePlayer/$playerName"
-        deletePlayerURL.httpPut().responseString()
+        deletePlayerURL.httpDelete().responseString{ _, _, result ->
+
+        }
         // super.onBackPressed(); commented this line in order to disable back press
     }
 
