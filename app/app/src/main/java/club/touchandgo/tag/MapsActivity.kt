@@ -1,16 +1,15 @@
 package club.touchandgo.tag
 
-import android.content.Context
 import android.content.pm.PackageManager
-import android.content.res.Resources
 import android.location.Location
-import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.AlarmClock
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.github.kittinunf.fuel.httpDelete
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPut
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -35,14 +34,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
     private var playerName = ""
+    private var threadStarted = false
+    private var threadInterrupted = false
     private var myPlayer: Player? = null
-    private val thread = Thread(Runnable {
-        while(true){
-            Thread.sleep(1000)
-            getPlayerNames()
-            updatePosition()
-        }
-    })
+    private lateinit var thread: Thread
 
     private val mLocationRequest = LocationRequest.create()
         .setInterval(2)
@@ -63,6 +58,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     }
 
     override fun onBackPressed() {
+        Log.d("HELLLLLLLLOOOOO", playerName)
+        threadInterrupted = true
+        val deletePlayerURL = "http://207.246.122.125:8080/deletePlayer/$playerName"
+        deletePlayerURL.httpDelete().responseString()
         // super.onBackPressed(); commented this line in order to disable back press
     }
 
@@ -71,6 +70,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         setTheme(R.style.Theme_AppCompat_DayNight_NoActionBar)
         setContentView(R.layout.activity_maps)
         playerName = intent.getStringExtra(AlarmClock.EXTRA_MESSAGE)
+        thread = Thread(Runnable {
+            while(true){
+                if(!threadInterrupted){
+                    Thread.sleep(1000)
+                    getPlayerNames()
+                    updatePosition()
+                }
+            }
+        })
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -78,10 +86,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
+    override fun onStop() {
+        super.onStop()
+        val deletePlayerURL = "http://207.246.122.125:8080/deletePlayer/$playerName"
+        deletePlayerURL.httpDelete().responseString()
+    }
+
     override fun onResume() {
         super.onResume()
         getPlayerNames()
-        thread.start()
+        if (!threadStarted){
+            thread.start()
+            threadStarted = true
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -126,10 +143,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap.setOnMarkerClickListener {
             runOnUiThread{
                 if(myPlayer?.tag == true && it.title != playerName){
-                    updatePlayer(true, it.title)
-                    updatePlayer(false, playerName)
-                    val toast = Toast.makeText(applicationContext,"You just tagged ${it.title}", Toast.LENGTH_LONG)
-                    toast.show()
+                    val location = Location("")
+                    location.latitude = myPlayer?.lat!!.toDouble()
+                    location.longitude = myPlayer?.long!!.toDouble()
+                    val opponent = Location("")
+                    opponent.longitude = it.position.longitude
+                    opponent.latitude = it.position.latitude
+                    var distance = location.distanceTo(opponent)
+                    if(distance < 5){
+                        updatePlayer(true, it.title)
+                        updatePlayer(false, playerName)
+                        val toast = Toast.makeText(applicationContext,"You just tagged ${it.title}", Toast.LENGTH_SHORT)
+                        toast.show()
+                    } else {
+                        val toast = Toast.makeText(applicationContext,"Too far to reach!", Toast.LENGTH_SHORT)
+                        toast.show()
+                    }
                 }
             }
             return@setOnMarkerClickListener false
@@ -210,7 +239,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         json.put("long", longitude)
 
 
-        var putPlayerURL = "http://207.246.122.125:8080/putPlayer/$playerName"
+        val putPlayerURL = "http://207.246.122.125:8080/putPlayer/$playerName"
         val request = putPlayerURL.httpPut().body(json.toString())
         request.httpHeaders["Content-Type"] = "application/json"
         request.responseString{ _, _, result ->
@@ -224,7 +253,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         json.put("tag", tag)
 
 
-        var putPlayerURL = "http://207.246.122.125:8080/putPlayer/$name"
+        val putPlayerURL = "http://207.246.122.125:8080/putPlayer/$name"
         val request = putPlayerURL.httpPut().body(json.toString())
         request.httpHeaders["Content-Type"] = "application/json"
         request.responseString{ _, _, result ->

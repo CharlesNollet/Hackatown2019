@@ -46,6 +46,7 @@ export class Index {
     }
 
     private async deletePlayer(req: express.Request, res:express.Response) {
+        console.log("DELETE");
         await Player.deleteOne({ username: req.params.username });
         res.end();
     }
