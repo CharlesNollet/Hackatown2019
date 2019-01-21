@@ -15,7 +15,7 @@ export class Index {
         this.router.post('/postGame', this.postGame.bind(this));
         this.router.get('/getGames', this.getAllGames.bind(this));
         this.router.get('/getPlayers', this.getPlayers.bind(this));
-        this.router.delete('/deletePlayer/:username', this.deletePlayer.bind(this));
+        this.router.put('/deletePlayer/:username', this.deletePlayer.bind(this));
         this.router.post('/postPlayer', this.postPlayer.bind(this));
         this.router.put('/putPlayer/:username', this.putPlayer.bind(this));
     }
